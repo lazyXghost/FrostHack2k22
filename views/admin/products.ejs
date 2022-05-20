@@ -1,0 +1,132 @@
+<%- include('partials/header') %>
+    <header>
+        <div class="cover header">
+            <div class="search">
+                <input class="search-input" type="search" name="" id="" placeholder="Search">
+                <i class="fa-search fas"></i>
+            </div>
+
+            <form action="">
+                <label for="city">City:</label>
+                <select name="city" id="city">
+                  <% for(let i=0;i < cities.length;i++) { %>
+                    <option value="<%= cities[i] %>"><%= cities[i] %></option>
+                  <% } %>
+                </select>
+            </form>
+        </div>
+    </header>
+
+    <div class="list">
+        <div class="cover">
+            <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th >Serial Number</th>
+                          <th >Product Name</th>
+                          <th >Category</th>
+                          <th >Seller</th>
+                          <th>MRP</th>
+                          <th>CostPrice</th>
+                          <th >Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(let i=-2;i < products.length;i++) { %>
+                          <tr>
+                          <th ><%= (i+1) %></th>
+                          <td><%= products[i].name %></td>
+                          <td><%= categoryDict[products[i].categoryID] %></td>
+                          <td><%= shopDict[products[i].shopID] %></td>
+                          <td><%= products[i].mrp %></td>
+                          <td><%= products[i].salePrice %></td>
+                          <td>
+                          <th >1</th>
+                          <td>Amul Suddh Desi Ghee</td>
+                          <td>Groceries</td>
+                          <td>Ram Kirana Stores</td>
+                          <td>
+                            <button type="button" class="green"><i class="fas fa-check"></i></button>
+                          <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                          </td>
+                        </tr>
+                        <% } %>
+                        <tr>
+                            <th >1</th>
+                            <td>Kacchi Ghani Badam Oil</td>
+                            <td>Groceries</td>
+                            <td>Ram Kirana Stores</td>
+                            <td>
+                              <button type="button" class="green"><i class="fas fa-check"></i></button>
+                            <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                            </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <header class="">
+        <div class="cover header">
+            Products Info
+        </div>
+    </header>
+
+
+    <div class="list">
+        <div class="cover">
+            <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th >Serial Number</th>
+                          <th >Product Name</th>
+                          <th >Category</th>
+                          <th >Seller</th>
+                          <th >Sold</th>
+                          <th >Returned</th>
+                          <th >Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th >1</th>
+                          <td>Amul Suddh Desi Ghee</td>
+                          <td>Groceries</td>
+                          <td>Ram Kirana Stores</td>
+                          <td>17</td>
+                          <td>2</td>
+                          <td>
+                            <button type="button" class="green"><i class="fas fa-check"></i></button>
+                          <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                          </td>
+                        </tr>
+                        <tr>
+                            <th >1</th>
+                            <td>Kacchi Ghani Badam Oil</td>
+                            <td>Groceries</td>
+                            <td>Ram Kirana Stores</td>\
+                            <td>5</td>
+                            <td>0</td>
+                            <td>
+                              <button type="button" class="green"><i class="fas fa-check"></i></button>
+                            <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                            </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
+<%- include('partials/footer') %>
