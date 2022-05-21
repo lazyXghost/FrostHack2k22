@@ -2,35 +2,23 @@
 
 <div class="cover">
     <div class="container">
-        <form action="" id="addStoreByAdmin" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-            <div class="inputs" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-            <input type="text" placeholder="Shop Name" required>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <input type="text" placeholder="Owner Name" required>
-            <input type="Number" placeholder="Owner's Phone Number" required>
-            <input type="Number" placeholder="Owner's Whatsapp Number" required>
-            <!-- <input type="text" placeholder="Address"> -->
-            <input type="Number" placeholder="Pin Code" required>
+        <form action="/admin/addstore" id="addStoreByAdmin" style="display: flex; justify-content: space-between; flex-wrap: wrap;" method="post">
+            <input type="text" placeholder="Shop Name" name="storeName" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <input type="text" placeholder="Owner Name" name="sellerName" required>
+            <input type="Number" placeholder="Owner's Phone Number" name="phoneNumber" required>
+            <input type="Number" placeholder="Owner's Whatsapp Number" name="whatsappNumber" required>
+            <input type="Number" placeholder="Pin Code" name="pincode" required>
             <div>
-                <label for="city">City:</label>
-                <select name="city" id="city">
-                    <% for(let i=0;i < cities.length;i++) { %>
-                        <option value="<%= cities[i] %>"><%= cities[i] %></option>
+                <label for="location">Location:</label>
+                <select name="location" id="location">
+                    <% for(let i=0;i < locations.length;i++) { %>
+                        <option value="<%= locations[i].city %>,<%= locations[i].state %>"><%= locations[i].city %>,<%= locations[i].state %></option>
                     <% } %>
                 </select>
             </div>
-            <div>
-                <label for="state">State:</label>
-                <select name="state" id="city">
-                    <% for(let i=0;i < states.length;i++) { %>
-                        <option value="<%= states[i] %>"><%= states[i] %></option>
-                    <% } %>
-                </select>
-            </div>
-          
-            </div>
-        <button>Submit</button>
+            <button>Submit</button>
         </form>
     </div>
 </div>

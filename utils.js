@@ -106,27 +106,6 @@ module.exports = {
     return;
   },
 
-  getLocations: async function(req,res) {
-    const locations = await locationTable.find();
-    const cities = Array(locations.length),states = Array(locations.length); 
-    // console.log(locations.length);
-    for(let i=0;i < locations.length;i++){
-      cities[i] = dbObjects[i].city;
-      states[i] = dbObjects[i].state;
-    }
-    const context = {
-      "cities":cities,
-      "states":states,
-    }
-    // console.log(context);
-    res.render("admin/addstore",{
-      user: req.user,
-      authenticated: req.isAuthenticated(),
-      ...context,
-    });
-    return;
-  },
-
   getCategories: async function(req,res) {
     const categories = await categoriesTable.find();
     const names= Array(categoriesTable.length);
