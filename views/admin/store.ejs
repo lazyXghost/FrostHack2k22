@@ -71,7 +71,7 @@
             </form>
         </div>
     </header>
-
+    
     <div class="list">
         <div class="cover">
             <div class="container">
@@ -87,6 +87,7 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <% if 
                         <% for(let i=0;i < rejected.length;i++) { %>
                           <tr>
                             <th><%= (i+1) %></th>
@@ -95,19 +96,16 @@
                             <td><%= rejected[i].pincode %></td>
                           </tr>
                         <% } %>
+                          
+                        <% for(let i=0;i < accepted.length;i++) { %>
+                          <tr>
+                            <th><%= (i+1) %></th>
+                            <td><%= accepted[i].name %></td>
+                            <td><%= accepted[i].ownerName %></td>
+                            <td><%= accepted[i].pincode %></td>
+                          </tr>
+                        <% } %>
                         
-                        <tr>
-                          <th >2</th>
-                          <td>Bootstrap Grid 4 Tutorial and Examples</td>
-                          <td>Cristina</td>
-                          <td>3.417</td>
-                        </tr>
-                        <tr>
-                          <th >3</th>
-                          <td>Bootstrap Flexbox Tutorial and Examples</td>
-                          <td>Cristina</td>
-                          <td>1.234</td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>

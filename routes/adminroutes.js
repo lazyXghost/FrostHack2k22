@@ -19,19 +19,16 @@ router.get("/", adminCheck, async (req, res) => {
 });
 
 router.get("/store", adminCheck, async (req, res) => {
-    const query = {verified : true};
+    const query = {status : 'pending'};
+    const acceptedStores = await storeTable.find({status: 'accepted'});
+    const rejectedStores = await storeTable.find({status: 'rejected'});
     const stores = await storeTable.find(query);
-    console.log(stores) ;
+    console.log(stores);
     const context = {
         "cities": ["indore", "IIT mandi","Chandigarh"],
         "stores": stores,
-        "rejected":[
-            {
-                "name":"Aniket's Store",
-                "ownerName":"Aniket",
-                "pincode":"175005",
-            }
-        ],
+        "rejected":rejectedStores,
+        "accepted":acceptedStores
     }
     
     res.render("admin/store",{
