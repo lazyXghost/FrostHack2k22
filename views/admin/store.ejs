@@ -91,25 +91,33 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <% if 
                         <% for(let i=0;i < rejected.length;i++) { %>
                           <tr>
                             <th><%= (i+1) %></th>
-                            <td><%= rejected[i].name %></td>
-                            <td><%= rejected[i].ownerName %></td>
-                            <td><%= rejected[i].pincode %></td>
+                            <td><%= rejected[i].storeName %></td>
+                            <td><%= rejected[i].sellerName %></td>
+                            <td><%= rejected[i].address.pincode %></td>
+                            <td>
+                              <a href="/admin/storeAccept?ID=<%=rejected[i]._id%>">
+                                <button type="button" class="green"><i class="fas fa-check"></i></button>
+                              </a>
+                            </td>
                           </tr>
                         <% } %>
                           
                         <% for(let i=0;i < accepted.length;i++) { %>
                           <tr>
                             <th><%= (i+1) %></th>
-                            <td><%= accepted[i].name %></td>
-                            <td><%= accepted[i].ownerName %></td>
-                            <td><%= accepted[i].pincode %></td>
+                            <td><%= accepted[i].storeName %></td>
+                            <td><%= accepted[i].sellerName %></td>
+                            <td><%= accepted[i].address.pincode %></td>
+                            <td>
+                              <a href="/admin/storeReject?ID=<%=accepted[i]._id%>">
+                                <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                              </a>
+                            </td>
                           </tr>
                         <% } %>
-                        
                       </tbody>
                     </table>
                   </div>

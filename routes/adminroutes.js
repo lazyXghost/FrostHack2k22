@@ -24,7 +24,6 @@ router.get("/store", adminCheck, async (req, res) => {
     const acceptedStores = await storeTable.find({status: 'accepted'});
     const rejectedStores = await storeTable.find({status: 'rejected'});
     const stores = await storeTable.find(query);
-    console.log(stores);
     const context = {
         "cities": ["indore", "IIT mandi","Chandigarh"],
         "stores": stores,
@@ -41,12 +40,12 @@ router.get("/store", adminCheck, async (req, res) => {
 
 router.get("/storeAccept", adminCheck, async (req, res) => {
     var store_id = url.parse(req.url, true).query.ID;
-    storeTable.findByIdAndUpdate(store_id, { status: 'accepted' });
+    await storeTable.findOneAndUpdate({ _id: store_id}, { status: 'accepted' });
     return res.redirect('/admin/store');
 })
 router.get("/storeReject", adminCheck, async (req, res) => {
     var store_id = url.parse(req.url, true).query.ID;
-    storeTable.findByIdAndUpdate(store_id, { status: 'rejected' });
+    await storeTable.findOneAndUpdate({ _id: store_id}, { status: 'rejected' });
     return res.redirect('/admin/store');
 })
 
