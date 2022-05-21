@@ -1,3 +1,4 @@
+var url = require('url');
 const router = require("express").Router();
 const { adminCheck,adminLoggedIn } = require("../middleware/auth");
 const { adminLogIn, getLocations,getProducts } = require("../utils");
@@ -37,6 +38,17 @@ router.get("/store", adminCheck, async (req, res) => {
         ... context,
     });    
 });
+
+router.get("/storeAccept", adminCheck, async (req, res) => {
+    var store_id = url.parse(req.url, true).query.ID;
+    storeTable.findByIdAndUpdate(store_id, { status: 'accepted' });
+    return res.redirect('/admin/store');
+})
+router.get("/storeReject", adminCheck, async (req, res) => {
+    var store_id = url.parse(req.url, true).query.ID;
+    storeTable.findByIdAndUpdate(store_id, { status: 'rejected' });
+    return res.redirect('/admin/store');
+})
 
 router.get("/coupon", adminCheck, (req, res) => {
     res.render("admin/coupon", {

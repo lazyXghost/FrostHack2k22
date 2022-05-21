@@ -43,8 +43,12 @@
                             <td><%= stores[i].sellerName %></td>
                             <td><%= stores[i].address.pincode %></td>
                             <td>
+                              <a href="/admin/storeAccept?ID=<%=stores[i]._id%>">
                               <button type="button" class="green"><i class="fas fa-check"></i></button>
-                            <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                              </a>
+                              <a href="/admin/storeReject?ID=<%=stores[i]._id%>">
+                              <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                              </a>
                             </td>
                           </tr>
                           <% }%>
