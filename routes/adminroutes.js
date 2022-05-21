@@ -1,7 +1,7 @@
 var url = require('url');
 const router = require("express").Router();
 const { adminCheck,adminLoggedIn } = require("../middleware/auth");
-const { adminLogIn, getLocations,getProducts } = require("../utils");
+const { adminLogIn } = require("../utils");
 const storeTable = require("../models/store");
 const locationTable = require("../models/location");
 
@@ -21,17 +21,15 @@ router.get("/", adminCheck, async (req, res) => {
 });
 
 router.get("/store", adminCheck, async (req, res) => {
-    const query = {status : 'pending'};
-    const acceptedStores = await storeTable.find({status: 'accepted'});
+    const pendingStores = await storeTable.find({status : 'pending'});
     const rejectedStores = await storeTable.find({status: 'rejected'});
-    const stores = await storeTable.find(query);
+    const acceptedStores = await storeTable.find({status: 'accepted'});
     const context = {
         "cities": ["indore", "IIT mandi","Chandigarh"],
-        "stores": stores,
+        "pending": pendingStores,
         "rejected":rejectedStores,
         "accepted":acceptedStores
     }
-    
     res.render("admin/store",{
         user :req.user,
         authenticated: req.isAuthenticated(),
@@ -81,7 +79,6 @@ router.post("/addstore", adminCheck, async (req, res) => {
         },
         status: "accepted"
     });
-    console.log(store);
     await store.save();
     return res.redirect("/admin/store");
 });  
@@ -107,7 +104,12 @@ router.get("/addCategory",adminCheck , (req, res)=>{
     });
 });
 
-router.get("/products", adminCheck, getProducts);
+router.get("/products", adminCheck, (req, res) => {
+    res.render("admin/products", {
+        user: req.user,
+        authenticated: req.isAuthenticated(),
+    });
+});
 
 router.get("/money", adminCheck,(req, res)=>{ 
     res.render("admin/money", {

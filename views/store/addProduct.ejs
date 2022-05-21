@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<form action="/store/addProduct" method="post">
+    <input type="text" name="name" id="name" placeholder="name">
+    <input type="number" name="costPrice" id="costPrice" placeholder="costPrice">
+    <input type="number" name="mrp" id="mrp" placeholder="mrp">
+    <input type="number" name="salePrice" id="salePrice" placeholder="salePrice">
+    <input type="number" name="quantity" id="quantity" placeholder="quantity">
+    <input type="text" name="description" id="description" placeholder="description">
+    <button type="submit">Add product</button>
+</form>
+<%- include('partials/footer') %>

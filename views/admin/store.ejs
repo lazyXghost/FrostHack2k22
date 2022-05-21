@@ -20,48 +20,52 @@
         </div>
     </header>
 
-    <div class="list">
+    <% if (pending.length > 0) {%>
+      <div class="list">
         <div class="cover">
-            <div class="container">
-                <div class="row">
-                  <div class="col-12">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th >Serial Number</th>
-                          <th >Store Name</th>
-                          <th >Owner Name</th>
-                          <th >Pincode</th>
-                          <th >Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% for(var i=0;i< stores.length;i++) {%>
-                          <tr>
-                            <th > <%=(i+1) %> </th>
-                            <td><%= stores[i].storeName %></td>
-                            <td><%= stores[i].sellerName %></td>
-                            <td><%= stores[i].address.pincode %></td>
-                            <td>
-                              <a href="/admin/storeAccept?ID=<%=stores[i]._id%>">
-                              <button type="button" class="green"><i class="fas fa-check"></i></button>
-                              </a>
-                              <a href="/admin/storeReject?ID=<%=stores[i]._id%>">
-                              <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
-                              </a>
-                            </td>
-                          </tr>
-                          <% }%>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <table>
+                  <thead>
+                    <tr>
+                      <th >Serial Number</th>
+                      <th >Store Name</th>
+                      <th >Owner Name</th>
+                      <th >Pincode</th>
+                      <th >Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i=0;i< stores.length;i++) {%>
+                      <tr>
+                        <th > <%=(i+1) %> </th>
+                        <td><%= pending[i].storeName %></td>
+                        <td><%= pending[i].sellerName %></td>
+                        <td><%= pending[i].address.pincode %></td>
+                        <td>
+                          <a href="/admin/storeAccept?ID=<%=pending[i]._id%>">
+                            <button type="button" class="green"><i class="fas fa-check"></i></button>
+                          </a>
+                          <a href="/admin/storeReject?ID=<%=pending[i]._id%>">
+                            <button type="button" class="red"><i class="far fa-trash-alt"></i></button>
+                          </a>
+                        </td>
+                      </tr>
+                    <% }%>
+                  </tbody>
+                </table>
               </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    <% }else{ %>
+      <br>
+    <% }%>
     <div class="cover" style="padding-bottom: 30px;">
       <div class="container">
-        OR <a href="/admin/addstore">Add Store Manually</a>
+        <a href="/admin/addstore">Add Store Manually</a>
       </div>
     </div>
     <header class="">
@@ -88,6 +92,7 @@
                           <th >Shop Name</th>
                           <th >Owner Name</th>
                           <th >Pincode</th>
+                          <th >Actions</th>
                         </tr>
                       </thead>
                       <tbody>

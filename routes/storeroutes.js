@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { storeLoggedIn, storeCheck } = require("../middleware/auth");
-const { storeLogIn, storeRegister } = require("../utils");
+const { storeLogIn, storeRegister, addProduct, getProducts } = require("../utils");
 
 // ----- Registration and authentication for Stores -----
 router.get("/login", storeLoggedIn, (req, res) => {
@@ -28,11 +28,28 @@ router.get("/dashboard", storeCheck, (req, res) => {
   res.render("store/dashboard");
 });
 
-router.get("/products", storeCheck, (req, res) => {
-  res.render("store/products", {
+router.get("/products", storeCheck, async (req, res) => {
+  const products = await getProducts(req, res);
+  const context = {
+    "products" : products
+  };
+
+  res.render("store/products",{
+    user: req.user,
+    authenticated: req.isAuthenticated(),
+    ...context,
+  });
+});
+
+router.get("/addProduct", storeCheck, (req, res) => {
+  res.render("store/addProduct", {
     authenticated: req.isAuthenticated(),
     user: req.user,
   });
+});
+router.post("/addProduct", storeCheck, async (req, res) => {
+  await addProduct(req, res);
+  res.redirect("/store/products");
 });
 
 router.get("/profile", storeCheck, (req, res) => {
