@@ -12,7 +12,18 @@ router.get("/register", userLoggedIn, (req, res) => {
     res.render("user/register");
 });
 
-router.post("/register", userRegister);
+router.post("/register", async (req, res) => {
+    if (req.body.password.length < 8) {
+        return res.redirect("/register");
+    }
+    const phoneNumber = req.body.phoneNumber;
+    const oldUser = await userTable.findOne({ phoneNumber });
+    if (oldUser) {
+        return res.redirect("/login");
+    }
+    await userRegister(req.body);
+    return res.redirect("/login");
+});
 
 // ----------- APP ROUTES ---------------
 router.get("/" , userCheck, (req, res) => {

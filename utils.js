@@ -22,7 +22,7 @@ module.exports = {
   userRegister: async function (req, res) {
     res.redirect("/login");
   },
-  storeRegister: async function (req, res) {
+  storeRegister: async function(formData, status) {
     const {
       storeName,
       email,
@@ -33,16 +33,7 @@ module.exports = {
       pincode,
       city,
       state,
-    } = req.body;
-    if (password.length < 8) {
-      return res.redirect("/store/register");
-    }
-
-    const oldStore = await storeTable.findOne({phoneNumber});
-    if (oldStore) {
-      return res.redirect("/store/login");
-    }
-
+    } = formData;
     const encryptedPassword = await bcrypt.hash(password, 10);
     await storeTable.create({
       storeName: storeName,
@@ -59,13 +50,13 @@ module.exports = {
         street: "gibberish",
         colony: "gibberish",
       },
+      status: status
     });
     //   e.preventdefault();
     //   alert("created a new store successfully");
-    res.redirect("/store/login");
   },
 
-  addProduct: async function (formData) {
+  addProduct: async function (formData, status) {
     const {
       name,
       costPrice,
@@ -84,6 +75,7 @@ module.exports = {
       salePrice: salePrice,
       quantity: quantity,
       description: description,
+      status: status
     });
   },
   // getProducts: async function(req, res){

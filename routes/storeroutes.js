@@ -15,7 +15,18 @@ router.get("/register", storeLoggedIn, (req, res) => {
   res.render("store/register");
 });
 
-router.post("/register", storeRegister);
+router.post("/register", async (req, res) =>{
+  if (req.body.password.length < 8) {
+    return res.redirect("/store/register");
+  }
+  const phoneNumber = req.body.phoneNumber;
+  const oldStore = await storeTable.findOne({phoneNumber});
+  if (oldStore) {
+    return res.redirect("/store/login");
+  }
+  await storeRegister(req.body, "pending");
+  return res.redirect("/store/login");
+});
 
 // ----------- APP ROUTES ---------------
 
@@ -46,7 +57,7 @@ router.get("/addProduct", storeCheck, (req, res) => {
   });
 });
 router.post("/addProduct", storeCheck, async (req, res) => {
-  await addProduct(req.body);
+  await addProduct(req.body, "pending");
   res.redirect("/store/products");
 });
 

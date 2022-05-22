@@ -1,7 +1,7 @@
 var url = require('url');
 const router = require("express").Router();
 const { adminCheck,adminLoggedIn } = require("../middleware/auth");
-const { adminLogIn } = require("../utils");
+const { adminLogIn, storeRegister } = require("../utils");
 const storeTable = require("../models/store");
 const productTable = require("../models/product");
 const locationTable = require("../models/location");
@@ -56,29 +56,9 @@ router.get("/addstore", adminCheck, async (req, res) => {
     });
 });  
 router.post("/addstore", adminCheck, async (req, res) => {
-    const {
-        storeName, email, password, sellerName, phoneNumber, whatsappNumber, pincode, location
-    } = req.body;
-    const city = location.split(',')[0];
-    const state = location.split(',')[1];
-
-    await storeTable.create({
-        storeName: storeName,
-        email: email,
-        password: password,
-        sellerName: sellerName,
-        phoneNumber: phoneNumber,
-        whatsappNumber: whatsappNumber,
-        address:{
-            store: "gibberish",
-            street: "gibberish",
-            colony: "gibberish",
-            pincode: pincode,
-            state: state,
-            city: city
-        },
-        status: "accepted"
-    });
+    req.body.city = req.body.location.split(',')[0];
+    req.body.state = req.body.location.split(',')[1];
+    await storeRegister(req.body, "accepted");
     return res.redirect("/admin/store");
 });  
 
