@@ -15,7 +15,9 @@ router.post("/login", adminLogIn);
 // ----------- APP ROUTES ---------------
 
 router.get("/", adminCheck, async (req, res) => {
+    const acceptedStores = await storeTable.find({status: 'accepted'});
     res.render("admin/index", {
+        stores: acceptedStores,
         user: req.user,
         authenticated: req.isAuthenticated(),
     });
