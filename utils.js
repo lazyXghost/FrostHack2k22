@@ -77,7 +77,7 @@ module.exports = {
 
     await productTable.create({
       name: name,
-      shopID: req.user._id,
+      storeID: req.user._id,
       categoryID: "noCategoryYet",
       costPrice: costPrice,
       mrp: mrp,

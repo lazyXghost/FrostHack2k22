@@ -3,6 +3,7 @@ const router = require("express").Router();
 const { adminCheck,adminLoggedIn } = require("../middleware/auth");
 const { adminLogIn } = require("../utils");
 const storeTable = require("../models/store");
+const productTable = require("../models/product");
 const locationTable = require("../models/location");
 
 // ----- Authentication for Admin -----
@@ -36,7 +37,6 @@ router.get("/store", adminCheck, async (req, res) => {
         ... context,
     });    
 });
-
 router.get("/storeAccept", adminCheck, async (req, res) => {
     var store_id = url.parse(req.url, true).query.ID;
     await storeTable.findOneAndUpdate({ _id: store_id}, { status: 'accepted' });
@@ -62,7 +62,7 @@ router.post("/addstore", adminCheck, async (req, res) => {
     const city = location.split(',')[0];
     const state = location.split(',')[1];
 
-    let store = new storeTable({
+    await storeTable.create({
         storeName: storeName,
         email: email,
         password: password,
@@ -79,7 +79,6 @@ router.post("/addstore", adminCheck, async (req, res) => {
         },
         status: "accepted"
     });
-    await store.save();
     return res.redirect("/admin/store");
 });  
 
@@ -104,13 +103,32 @@ router.post("/addstore", adminCheck, async (req, res) => {
 //     });
 // });
 
-// router.get("/products", adminCheck, (req, res) => {
-//     res.render("admin/products", {
-//         user: req.user,
-//         authenticated: req.isAuthenticated(),
-//     });
-// });
-
+router.get("/product", adminCheck, async (req, res) => {
+    const pendingproducts = await productTable.find({status : 'pending'});
+    const rejectedproducts = await productTable.find({status: 'rejected'});
+    const acceptedproducts = await productTable.find({status: 'accepted'});
+    const context = {
+        "cities": ["indore", "IIT mandi","Chandigarh"],
+        "pending": pendingproducts,
+        "rejected":rejectedproducts,
+        "accepted":acceptedproducts
+    }
+    res.render("admin/product", {
+        user: req.user,
+        authenticated: req.isAuthenticated(),
+        ... context,
+    });
+});
+router.get("/productAccept", adminCheck, async (req, res) => {
+    var product_id = url.parse(req.url, true).query.ID;
+    await productTable.findOneAndUpdate({ _id: product_id}, { status: 'accepted' });
+    return res.redirect('/admin/product');
+})
+router.get("/productReject", adminCheck, async (req, res) => {
+    var product_id = url.parse(req.url, true).query.ID;
+    await productTable.findOneAndUpdate({ _id: product_id}, { status: 'rejected' });
+    return res.redirect('/admin/product');
+})
 // router.get("/money", adminCheck,(req, res)=>{ 
 //     res.render("admin/money", {
 //         user: req.user,

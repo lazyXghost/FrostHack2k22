@@ -1,3 +1,4 @@
+var url = require('url');
 const router = require("express").Router();
 const { storeLoggedIn, storeCheck } = require("../middleware/auth");
 const { storeLogIn, storeRegister, addProduct } = require("../utils");
@@ -49,6 +50,11 @@ router.post("/addProduct", storeCheck, async (req, res) => {
   res.redirect("/store/products");
 });
 
+router.get("/deleteProduct", storeCheck, async (req, res) => {
+  var product_id = url.parse(req.url, true).query.ID;
+  await productTable.deleteOne({ _id: product_id});
+  res.redirect("/store/products");
+});
 // router.get("/profile", storeCheck, (req, res) => {
 //   res.render("store/profile", {
 //     authenticated: req.isAuthenticated(),

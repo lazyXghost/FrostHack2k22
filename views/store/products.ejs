@@ -22,6 +22,8 @@
                   <h5 class="card-title"><%= products[i].name %></h5>
                   <p class="card-text"><%= products[i].description %></p>
                 </div>
+                <a href="/store/deleteProduct?ID=<%=products[i]._id%>">Delete</a>
+                <div></div>
               </div>
             </div>
         <% } %>

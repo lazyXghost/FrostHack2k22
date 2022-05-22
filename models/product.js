@@ -5,7 +5,7 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    shopID: {
+    storeID: {
         type: String,
         required: true,
     },
