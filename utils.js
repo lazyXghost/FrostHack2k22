@@ -123,10 +123,12 @@ module.exports = {
     await orderTable.create({
       userID: userID,
       orderTime: new Date(),
-      products: [{
-        productID: productID,
-        quantity: quantity
-      }],
+      products: [
+        {
+          productID: productID,
+          quantity: quantity
+        },
+      ],
       orderNumber: 101,
       shippingAddress: {
         house: house,
