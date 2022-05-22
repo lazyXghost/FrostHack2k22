@@ -31,7 +31,6 @@ module.exports = {
       city,
       state,
     } = formData;
-    console.log(formData);
     const encryptedPassword = await bcrypt.hash(password, 10);
     await userTable.create({
       name: name,
@@ -91,12 +90,13 @@ module.exports = {
       mrp,
       salePrice,
       quantity,
-      description
+      description,
+      storeID
     } = formData;
-
+    console.log(formData);
     await productTable.create({
       name: name,
-      storeID: req.user._id,
+      storeID: storeID,
       categoryID: "noCategoryYet",
       costPrice: costPrice,
       mrp: mrp,

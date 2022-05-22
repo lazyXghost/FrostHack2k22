@@ -1,7 +1,9 @@
+var url = require('url');
 const router = require("express").Router();
 const { userLoggedIn, userCheck } = require("../middleware/auth");
 const { userLogIn, userRegister } = require("../utils");
 const userTable = require('../models/user');
+const productTable = require('../models/product');
 
 // ----- Registration and authentication for Users -----
 router.get("/login", userLoggedIn, (req, res) => {
@@ -27,13 +29,23 @@ router.post("/register", async (req, res) => {
 });
 
 // ----------- APP ROUTES ---------------
-router.get("/" , userCheck, (req, res) => {
+router.get("/" , userCheck, async (req, res) => {
+    const products = await productTable.find({status: 'accepted'});
     res.render("user/index",{
         authenticated: req.isAuthenticated(),
         user: req.user,
+        products: products
     });
 });
-
+router.get("/buyProduct" , userCheck, async (req, res) => {
+    var product_id = url.parse(req.url, true).query.ID;
+    const product = await productTable.find({_id: product_id});
+    res.render("user/buyProduct",{
+        authenticated: req.isAuthenticated(),
+        user: req.user,
+        product: product
+    });
+});
 // router.get("/contact", (req, res) => {
 //     res.render("store/contact");
 // });
