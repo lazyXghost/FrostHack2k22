@@ -1,9 +1,11 @@
 const storeTable = require("./models/store");
-const locationTable = require("./models/location");
-const categoriesTable = require("./models/category");
+const userTable = require("./models/user");
+// const locationTable = require("./models/location");
+// const categoriesTable = require("./models/category");
 const productTable = require("./models/product");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+
 
 module.exports = {
   userLogIn: passport.authenticate("user-local", {
@@ -19,8 +21,34 @@ module.exports = {
     failureRedirect: "/admin/login",
   }),
 
-  userRegister: async function (req, res) {
-    res.redirect("/login");
+  userRegister: async function(formData) {
+    const {
+      name,
+      email,
+      password,
+      phoneNumber,
+      pincode,
+      city,
+      state,
+    } = formData;
+    console.log(formData);
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    await userTable.create({
+      name: name,
+      email: email.toLowerCase(),
+      password: encryptedPassword,
+      phoneNumber: phoneNumber,
+      address: {
+        pincode: pincode,
+        state: state,
+        city: city,
+        house: "gibberish",
+        street: "gibberish",
+        colony: "gibberish",
+      },
+    });
+    //   e.preventdefault();
+    //   alert("created a new store successfully");
   },
   storeRegister: async function(formData, status) {
     const {

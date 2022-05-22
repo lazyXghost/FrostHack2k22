@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { userLoggedIn, userCheck } = require("../middleware/auth");
 const { userLogIn, userRegister } = require("../utils");
+const userTable = require('../models/user');
 
 // ----- Registration and authentication for Users -----
 router.get("/login", userLoggedIn, (req, res) => {
