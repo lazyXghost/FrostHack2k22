@@ -18,8 +18,9 @@ module.exports = {
     successRedirect: "/admin",
     failureRedirect: "/admin/login",
   }),
+
   userRegister: async function (req, res) {
-    res.render("store/login");
+    res.redirect("/login");
   },
   storeRegister: async function (req, res) {
     const {
@@ -37,82 +38,81 @@ module.exports = {
       return res.redirect("/store/register");
     }
 
-    const oldStore = await storeTable.findOne({ phoneNumber });
+    const oldStore = await storeTable.findOne({phoneNumber});
     if (oldStore) {
       return res.redirect("/store/login");
     }
 
     const encryptedPassword = await bcrypt.hash(password, 10);
-
-    // adding a new store.
-    const fulladdress = {
-      pincode: pincode,
-      state: state,
-      city: city,
-      store: "gibberish",
-      street: "gibberish",
-      colony: "gibberish",
-    };
-    const store = await storeTable.create({
+    await storeTable.create({
       storeName: storeName,
       email: email.toLowerCase(),
       password: encryptedPassword,
       sellerName: sellerName,
       phoneNumber: phoneNumber,
       whatsappNumber: whatsappNumber,
-      address: fulladdress,
+      address: {
+        pincode: pincode,
+        state: state,
+        city: city,
+        store: "gibberish",
+        street: "gibberish",
+        colony: "gibberish",
+      },
     });
-    res.render("store/login");
+    //   e.preventdefault();
+    //   alert("created a new store successfully");
+    res.redirect("/store/login");
   },
 
-  // addstore:async function(req,res) {
-  //   const {
-  //     storeName,
-  //     email,
-  //     password,
-  //     sellerName,
-  //     phoneNumber,
-  //     whatsappNumber,
-  //     pincode,
-  //     city,
-  //     state,
-  //   } = req.body;
-  //   if (password.length < 8) {
-  //     return res.redirect("/admin/addstore");
-  //   }
-  //   const oldStore = await storeTable.findOne({ phoneNumber });
+  addProduct: async function (formData) {
+    const {
+      name,
+      costPrice,
+      mrp,
+      salePrice,
+      quantity,
+      description
+    } = formData;
 
-  //   if (oldStore) {
-  //     // console.log("User already exists");
-  //     return res.redirect("/admin/addstore");
-  //   }
+    await productTable.create({
+      name: name,
+      shopID: req.user._id,
+      categoryID: "noCategoryYet",
+      costPrice: costPrice,
+      mrp: mrp,
+      salePrice: salePrice,
+      quantity: quantity,
+      description: description,
+    });
+  },
+  // getProducts: async function(req, res){
+    // const locations = await locationTable.find();
+    // const categories = await categoriesTable.find();
+    // const storeId = Array(stores.length);
+    // for (let i = 0; i < stores.length; i++) {
+    //   storeId[i] = stores[i]._id;
+    // }
+    // const products = await productTable.find({
+    //   storeID: {
+    //     $in: storeId
+    //   }
+    // });
+    // const categoryDict = {},storeDict ={};
+    // const cities = Array(locations.length);
 
-  //   const encryptedPassword = await bcrypt.hash(password, 10);
+    // // console.log(locations.length);
+    // for(let i=0;i < locations.length;i++){
+    //   cities[i] = locations[i].city;
+    // }
+    // for(let i=0;i<categories.length;i++){
+    //   categoryDict[categories[i]._id] = categories[i].categoryName
+    // }
 
-  //   // adding a new store.
-  //   const fulladdress = {
-  //     pincode: pincode,
-  //     state: state,
-  //     city: city,
-  //     store: "gibberish",
-  //     street: "gibberish",
-  //     colony: "gibberish",
-  //   };
-  //   const store = await storeTable.create({
-  //     storeName: storeName,
-  //     email: email.toLowerCase(),
-  //     password: encryptedPassword,
-  //     sellerName: sellerName,
-  //     phoneNumber: phoneNumber,
-  //     whatsappNumber: whatsappNumber,
-  //     address: fulladdress,
-  //   });
-  //   e.preventdefault();
-  //   alert("created a new store successfully");
-  //   // console.log("created a new store");
-  //   return;
+    // for(let i=0;i < stores.length;i++){
+    //   storeDict[stores[i]._id] = stores[i].storeName;
+    // }
   // },
-
   // getCategories: async function(req,res) {
   //   const categories = await categoriesTable.find();
   //   const names= Array(categoriesTable.length);
@@ -125,51 +125,6 @@ module.exports = {
   //     names
   //   });
   // },
-
-  getProducts: async function (req,res) {
-    // const locations = await locationTable.find();
-    // const categories = await categoriesTable.find();
-    const stores = await storeTable.find({city:"IIT Mandi"});
-    const storeId = Array(stores.length);
-    for(let i=0;i<stores.length;i++){
-      storeId[i] = stores[i]._id;
-    }
-    const products = await productTable.find({storeID:{"$in":storeId}});
-    // const categoryDict = {},storeDict ={};
-    // const cities = Array(locations.length); 
-    
-    // // console.log(locations.length);
-    // for(let i=0;i < locations.length;i++){
-    //   cities[i] = locations[i].city;
-    // }
-    // for(let i=0;i<categories.length;i++){
-    //   categoryDict[categories[i]._id] = categories[i].categoryName
-    // }
-
-    // for(let i=0;i < stores.length;i++){
-    //   storeDict[stores[i]._id] = stores[i].storeName;
-    // }
-    return products;
-  },
-
-  addProduct: async function(req,res){
-    const {
-      name, costPrice, mrp, salePrice, quantity, description
-    } = req.body;
-
-    let product = new productTable({
-        name: name,
-        shopID: req.user._id,
-        categoryID: 'noCategoryYet',
-        costPrice: costPrice,
-        mrp: mrp,
-        salePrice: salePrice,
-        quantity: quantity,
-        description: description,
-        status: "pending"
-    });
-    await product.save();
-  },
 
   // addCategory: async function(req,res) {
   //   const {categoryName} = req.body;
