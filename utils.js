@@ -6,14 +6,21 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 module.exports = {
+  userLogIn: passport.authenticate("user-local", {
+    successRedirect: "/user",
+    failureRedirect: "/user/login",
+  }),
   storeLogIn: passport.authenticate("store-local", {
-    successRedirect: "/store/dashboard",
+    successRedirect: "/store",
     failureRedirect: "/store/login",
   }),
   adminLogIn: passport.authenticate("admin-local", {
-    successRedirect: "/admin/",
+    successRedirect: "/admin",
     failureRedirect: "/admin/login",
   }),
+  userRegister: async function (req, res) {
+    res.render("store/login");
+  },
   storeRegister: async function (req, res) {
     const {
       storeName,
@@ -159,6 +166,7 @@ module.exports = {
         salePrice: salePrice,
         quantity: quantity,
         description: description,
+        status: "pending"
     });
     await product.save();
   },

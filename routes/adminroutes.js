@@ -14,7 +14,7 @@ router.post("/login", adminLogIn);
 // ----------- APP ROUTES ---------------
 
 router.get("/", adminCheck, async (req, res) => {
-    res.render("admin/home", {
+    res.render("admin/index", {
         user: req.user,
         authenticated: req.isAuthenticated(),
     });
@@ -83,39 +83,39 @@ router.post("/addstore", adminCheck, async (req, res) => {
     return res.redirect("/admin/store");
 });  
 
-router.get("/coupon", adminCheck, (req, res) => {
-    res.render("admin/coupon", {
-        user: req.user,
-        authenticated: req.isAuthenticated(),
-    });
+// router.get("/coupon", adminCheck, (req, res) => {
+//     res.render("admin/coupon", {
+//         user: req.user,
+//         authenticated: req.isAuthenticated(),
+//     });
     
-})
-router.get("/category",adminCheck , (req, res)=>{
-    res.render("admin/category", {
-        user: req.user,
-        authenticated: req.isAuthenticated(),
-    });
-});
+// })
+// router.get("/category",adminCheck , (req, res)=>{
+//     res.render("admin/category", {
+//         user: req.user,
+//         authenticated: req.isAuthenticated(),
+//     });
+// });
 
-router.get("/addCategory",adminCheck , (req, res)=>{
-    res.render("admin/category", {
-        user: req.user,
-        authenticated: req.isAuthenticated(),
-    });
-});
+// router.get("/addCategory",adminCheck , (req, res)=>{
+//     res.render("admin/category", {
+//         user: req.user,
+//         authenticated: req.isAuthenticated(),
+//     });
+// });
 
-router.get("/products", adminCheck, (req, res) => {
-    res.render("admin/products", {
-        user: req.user,
-        authenticated: req.isAuthenticated(),
-    });
-});
+// router.get("/products", adminCheck, (req, res) => {
+//     res.render("admin/products", {
+//         user: req.user,
+//         authenticated: req.isAuthenticated(),
+//     });
+// });
 
-router.get("/money", adminCheck,(req, res)=>{ 
-    res.render("admin/money", {
-        user: req.user,
-        authenticated: req.isAuthenticated(),
-    });
-})
+// router.get("/money", adminCheck,(req, res)=>{ 
+//     res.render("admin/money", {
+//         user: req.user,
+//         authenticated: req.isAuthenticated(),
+//     });
+// })
 
 module.exports = router;

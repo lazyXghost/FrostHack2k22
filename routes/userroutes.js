@@ -1,39 +1,25 @@
 const router = require("express").Router();
+const { userLoggedIn, userCheck } = require("../middleware/auth");
+const { userLogIn, userRegister } = require("../utils");
 
-// const passport = require("passport");
-const {userCheck} = require("../middleware/auth");
-// const {storeRegister} = require("../utils");
+// ----- Registration and authentication for Users -----
+router.get("/login", userLoggedIn, (req, res) => {
+    res.render("user/login");
+});
+router.post("/login", userLogIn);
 
+router.get("/register", userLoggedIn, (req, res) => {
+    res.render("user/register");
+});
+router.post("/register", userRegister);
 
+// ----------- APP ROUTES ---------------
 router.get("/" , userCheck, (req, res) => {
-    res.render("index",{
+    res.render("user/index",{
         authenticated: req.isAuthenticated(),
         user: req.user,
     });
 });
-
-// requests for register and login
-// router.get("/register",userLoggedIn,(req,res) => {
-//     res.render("user/register");
-// });
-
-// router.post("/register",storeRegister);
-
-router.get("/login",(req,res)=>{
-    res.render("index");
-});
-
-// router.post("/login",passport.authenticate('local',{
-//     successRedirect: "/user/home",
-//     failureRedirect: "/user/login",
-// }));
-
-// router.get("/home",(req,res)=> {
-//     res.render("user/home",{
-//         authenticated:req.isAuthenticated(),
-//         user:req.user
-//     });
-// });
 
 // router.get("/contact", (req, res) => {
 //     res.render("store/contact");
@@ -57,10 +43,5 @@ router.get("/login",(req,res)=>{
 //         token:req.body.token
 //     });
 // });
-
-router.get("/logout",(req,res) => {
-    req.logOut();
-    res.redirect("/");
-});
 
 module.exports = router;

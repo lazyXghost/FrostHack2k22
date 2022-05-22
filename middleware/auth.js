@@ -25,7 +25,7 @@ module.exports = {
   },
   storeLoggedIn: function(req,res,next){
     if(req.user && req.user.userType == 'store' && req.user.approved == 'accepted') {
-      return res.redirect("/store/dashboard");
+      return res.redirect("/store/");
     }
     return next();
   },

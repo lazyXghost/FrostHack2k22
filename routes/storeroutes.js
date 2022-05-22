@@ -18,14 +18,10 @@ router.post("/register", storeRegister);
 // ----------- APP ROUTES ---------------
 
 router.get("/", storeCheck, (req, res) => {
-  res.render("store/dashboard", {
+  res.render("store/index",{
     authenticated: req.isAuthenticated(),
     user: req.user,
   });
-});
-
-router.get("/dashboard", storeCheck, (req, res) => {
-  res.render("store/dashboard");
 });
 
 router.get("/products", storeCheck, async (req, res) => {
@@ -52,27 +48,26 @@ router.post("/addProduct", storeCheck, async (req, res) => {
   res.redirect("/store/products");
 });
 
-router.get("/profile", storeCheck, (req, res) => {
-  res.render("store/profile", {
-    authenticated: req.isAuthenticated(),
-    user: req.user,
-    token: req.body.token,
-  });
-});
+// router.get("/profile", storeCheck, (req, res) => {
+//   res.render("store/profile", {
+//     authenticated: req.isAuthenticated(),
+//     user: req.user,
+//   });
+// });
 
-router.get("/contact", (req, res) => {
-  res.render("store/contact");
-});
+// router.get("/contact", (req, res) => {
+//   res.render("store/contact");
+// });
 
 
-router.get("/faqs", (req, res) => {
-  res.render("store/faq");
-});
+// router.get("/faqs", (req, res) => {
+//   res.render("store/faq");
+// });
 
-// Logging Out
-router.delete("/logout", (req, res) => {
-  req.logOut();
-  res.redirect("/login");
-});
+// // Logging Out
+// router.delete("/logout", (req, res) => {
+//   req.logOut();
+//   res.redirect("/login");
+// });
 
 module.exports = router;
