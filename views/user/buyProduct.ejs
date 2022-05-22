@@ -32,7 +32,7 @@
                 <div class="details shadow">
                     <div class="details__item">
                         <div class="item__image">
-                            <img class="iphone" src="https://www.apple.com/v/iphone/compare/k/images/overview/compare_iphoneXSmax_silver_large.jpg" alt="">
+                            <img class="iphone" src="data:image/image/png;base64,<%=product.image.data.toString('base64')%>" alt="">
                         </div>
                         <div class="item__details">
                             <div class="item__title">
@@ -77,39 +77,39 @@
                                     <h3>Billing Address</h3>
                                     <div>
                                         <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
                                     </div>
                                     <div>
                                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                                        <input type="text" id="email" name="email" placeholder="john@example.com" required>
                                     </div>
                                     <div>
                                         <label for="house"><i class="fa fa-house-card-o"></i> House</label>
-                                        <input type="text" id="house" name="house" placeholder="H. No. 143">
+                                        <input type="text" id="house" name="house" placeholder="H. No. 143" required>
                                     </div>
                                     <div>
                                         <label for="colony"><i class="fa fa-colony-card-o"></i> Colony </label>
-                                        <input type="text" id="colony" name="colony" placeholder="542 W.">
+                                        <input type="text" id="colony" name="colony" placeholder="542 W." required>
                                     </div>
                                     <div>
                                         <label for="street"><i class="fa fa-street-card-o"></i> Street </label>
-                                        <input type="text" id="street" name="street" placeholder="15th street">
+                                        <input type="text" id="street" name="street" placeholder="15th street" required>
                                     </div>
                                     <div>
                                         <label for="city"><i class="fa fa-institution"></i> City</label>
-                                        <input type="text" id="city" name="city" placeholder="New York">
+                                        <input type="text" id="city" name="city" placeholder="New York" required>
                                     </div>
                                     <div>
                                         <label for="state">State</label>
-                                        <input type="text" id="state" name="state" placeholder="NY">
+                                        <input type="text" id="state" name="state" placeholder="NY" required>
                                     </div>
                                     <div>
                                         <label for="pincode">Pin Code</label>
-                                        <input type="text" id="pincode" name="pincode" placeholder="10001">
+                                        <input type="text" id="pincode" name="pincode" placeholder="10001" required>
                                     </div>
                                     <div style="display: none;">
                                         <label for="productID">Product</label>
-                                        <input type="text" id="productID" name="productID" placeholder="productID" value="<%= product._id %>">
+                                        <input type="text" id="productID" name="productID" placeholder="productID" value="<%= product._id %>" required>
                                     </div>
                                 </div>
                             </div>

@@ -51,9 +51,9 @@ router.get("/buyProduct" , userCheck, async (req, res) => {
     });
 });
 router.post("/buyProduct", userCheck, async(req, res) => {
-    req.body.userID = req.user._id;  
+    req.body.userID = req.user._id;
     await placeOrder(req.body);
-    return res.redirect("/orders")
+    return res.redirect("/orders");
 })
 router.get("/orders" , userCheck, async (req, res) => {
     const orders = await orderTable.find({userID: req.user._id});
