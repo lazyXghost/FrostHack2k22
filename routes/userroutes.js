@@ -11,6 +11,7 @@ router.post("/login", userLogIn);
 router.get("/register", userLoggedIn, (req, res) => {
     res.render("user/register");
 });
+
 router.post("/register", userRegister);
 
 // ----------- APP ROUTES ---------------

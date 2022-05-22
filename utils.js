@@ -7,8 +7,8 @@ const passport = require("passport");
 
 module.exports = {
   userLogIn: passport.authenticate("user-local", {
-    successRedirect: "/user",
-    failureRedirect: "/user/login",
+    successRedirect: "/",
+    failureRedirect: "/login",
   }),
   storeLogIn: passport.authenticate("store-local", {
     successRedirect: "/store",
