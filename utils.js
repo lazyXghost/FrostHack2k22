@@ -3,6 +3,7 @@ const userTable = require("./models/user");
 // const locationTable = require("./models/location");
 // const categoriesTable = require("./models/category");
 const productTable = require("./models/product");
+const orderTable = require("./models/order");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
@@ -93,7 +94,6 @@ module.exports = {
       description,
       storeID
     } = formData;
-    console.log(formData);
     await productTable.create({
       name: name,
       storeID: storeID,
@@ -106,6 +106,38 @@ module.exports = {
       status: status
     });
   },
+  placeOrder: async function(formData){
+    const {
+      quantity,
+      firstname,
+      email,
+      userID,
+      house,
+      street,
+      colony,
+      city,
+      state,
+      pincode,
+      productID
+    } = formData;
+    await orderTable.create({
+      userID: userID,
+      orderTime: new Date(),
+      products: [{
+        productID: productID,
+        quantity: quantity
+      }],
+      orderNumber: 101,
+      shippingAddress: {
+        house: house,
+        street: street,
+        colony: colony,
+        pincode: pincode,
+        city: city,
+        state: state
+      },
+    })
+  }
   // getProducts: async function(req, res){
     // const locations = await locationTable.find();
     // const categories = await categoriesTable.find();

@@ -9,12 +9,16 @@ const OrderSchema = new mongoose.Schema({
         type:Date,
         default:Date.now(),
     },
-    productsID: [
+    products: [
         {
             productID: {
                 type: String,
-                unique: true,
+                required: true
             },
+            quantity: {
+                type: Number,
+                required: true,
+            }
         },
     ],
     orderNumber: {

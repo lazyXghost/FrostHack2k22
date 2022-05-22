@@ -1,0 +1,17 @@
+<% for(var i = 0;i<orders.length;i++) { %>
+    <div class="order">
+        <%= orders[i]._id %>
+        <br>
+        <%= orders[i].userID %>
+        <br>
+        <%= orders[i].orderTime %>
+        <br>
+        <%= orders[i].products %>
+        <br>
+        <%= orders[i].orderNumber %>
+        <br>
+        <%= orders[i].shippingAddress %>
+        <br>
+    </div>
+    <hr>
+<% } %>

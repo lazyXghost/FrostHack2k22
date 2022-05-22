@@ -1,99 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="/user_UI/css/buyProduct.css" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="/user_UI/css/buyProduct.css" rel="stylesheet">
+    </head>
 
-<body>
-
-    <div class="row">
-        <div class="col-75">
+    <body>
+        <header>
             <div class="container">
-                <form action="/action_page.php">
-
-                    <div class="row">
-                        <div class="col-50">
-                            <h3>Billing Address</h3>
-                            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                            <input type="text" id="email" name="email" placeholder="john@example.com">
-                            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-                            <label for="city"><i class="fa fa-institution"></i> City</label>
-                            <input type="text" id="city" name="city" placeholder="New York">
-
-                            <div class="row">
-                                <div class="col-50">
-                                    <label for="state">State</label>
-                                    <input type="text" id="state" name="state" placeholder="NY">
-                                </div>
-                                <div class="col-50">
-                                    <label for="zip">Zip</label>
-                                    <input type="text" id="zip" name="zip" placeholder="10001">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-50">
-                            <h3>Payment</h3>
-                            <label for="fname">Accepted Cards</label>
-                            <div class="icon-container">
-                                <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                <i class="fa fa-cc-discover" style="color:orange;"></i>
-                            </div>
-                            <label for="cname">Name on Card</label>
-                            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-                            <label for="ccnum">Credit card number</label>
-                            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                            <label for="expmonth">Exp Month</label>
-                            <input type="text" id="expmonth" name="expmonth" placeholder="September">
-
-                            <div class="row">
-                                <div class="col-50">
-                                    <label for="expyear">Exp Year</label>
-                                    <input type="text" id="expyear" name="expyear" placeholder="2018">
-                                </div>
-                                <div class="col-50">
-                                    <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" placeholder="352">
-                                </div>
-                            </div>
-                        </div>
-
+                <div class="navigation">
+                    <div class="logo">
+                        <i class="icon icon-basket"></i>
+                        <%= store.storeName %>
                     </div>
-                    <label>
-                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                    </label>
-                    <input type="submit" value="Continue to checkout" class="btn">
-                </form>
+                    <div class="secure">
+                        <i class="icon icon-shield"></i>
+                        <span>Secure Checkout</span>
+                    </div>
+                </div>
+                <div class="notification">
+                    Complete Your Purchase
+                </div>
             </div>
-        </div>
-
-        <div class="col-25">
-            <div class="container">
-                <h4>Cart
-                    <span class="price" style="color:black">
-                        <i class="fa fa-shopping-cart"></i>
-                        <b>4</b>
-                    </span>
-                </h4>
-                <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-                <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-                <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-                <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-                <hr>
-                <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
-            </div>
-        </div>
-    </div>
-</body>
+        </header>
+        <form action="/buyProduct" method="post">
+            <section class="content">
+                <div class="details shadow">
+                    <div class="details__item">
+                        <div class="item__image">
+                            <img class="iphone" src="https://www.apple.com/v/iphone/compare/k/images/overview/compare_iphoneXSmax_silver_large.jpg" alt="">
+                        </div>
+                        <div class="item__details">
+                            <div class="item__title">
+                                <%= product.name %>
+                            </div>
+                            <div class="item__price">
+                                Rs <%= product.mrp %> x Quantity
+                            </div>
+                            <div class="item__quantity">
+                                Quantity: <input type="number" name="quantity" id="quantity" style="width: 35px;height: 30px;font-size: 18px;" value="1">
+                            </div>
+                            <br>
+                            <div class="item__description">
+                                <%= product.description%>
+                                    </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="payment">
+                        <div class="payment__title">
+                            Payment Method
+                        </div>
+                        <div class="payment__types">
+                            <div class="payment__type payment__type--cc active">
+                                <i class="icon icon-credit-card"></i>Cash On Delievery
+                            </div>
+                            <div class="payment__type payment__type--paypal">
+                                <i class="icon icon-paypal"></i>Paypal
+                            </div>
+                            <div class="payment__type payment__type--paypal">
+                                <i class="icon icon-wallet"></i>SEPA
+                            </div>
+                            <div class="payment__type payment__type--paypal">
+                                <i class="icon icon-note"></i>Invoice
+                            </div>
+                        </div>
+                        <div class="payment__info">
+                            <div class="row">
+                                <div class="col-50">
+                                    <h3>Billing Address</h3>
+                                    <div>
+                                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                                    </div>
+                                    <div>
+                                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                                    </div>
+                                    <div>
+                                        <label for="house"><i class="fa fa-house-card-o"></i> House</label>
+                                        <input type="text" id="house" name="house" placeholder="H. No. 143">
+                                    </div>
+                                    <div>
+                                        <label for="colony"><i class="fa fa-colony-card-o"></i> Colony </label>
+                                        <input type="text" id="colony" name="colony" placeholder="542 W.">
+                                    </div>
+                                    <div>
+                                        <label for="street"><i class="fa fa-street-card-o"></i> Street </label>
+                                        <input type="text" id="street" name="street" placeholder="15th street">
+                                    </div>
+                                    <div>
+                                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                                        <input type="text" id="city" name="city" placeholder="New York">
+                                    </div>
+                                    <div>
+                                        <label for="state">State</label>
+                                        <input type="text" id="state" name="state" placeholder="NY">
+                                    </div>
+                                    <div>
+                                        <label for="pincode">Pin Code</label>
+                                        <input type="text" id="pincode" name="pincode" placeholder="10001">
+                                    </div>
+                                    <div style="display: none;">
+                                        <label for="productID">Product</label>
+                                        <input type="text" id="productID" name="productID" placeholder="productID" value="<%= product._id %>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="actions">
+                        <button class="btn action__submit">Place your Order
+                            <i class="icon icon-arrow-right-circle"></i>
+                        </button>
+                        <a href="/" class="backBtn">Go Back to All products</a>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </body>
 
 </html>

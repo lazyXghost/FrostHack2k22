@@ -1,8 +1,10 @@
 var url = require('url');
 const router = require("express").Router();
 const { userLoggedIn, userCheck } = require("../middleware/auth");
-const { userLogIn, userRegister } = require("../utils");
+const { userLogIn, userRegister, placeOrder } = require("../utils");
 const userTable = require('../models/user');
+const orderTable = require('../models/order');
+const storeTable = require('../models/store');
 const productTable = require('../models/product');
 
 // ----- Registration and authentication for Users -----
@@ -39,11 +41,26 @@ router.get("/" , userCheck, async (req, res) => {
 });
 router.get("/buyProduct" , userCheck, async (req, res) => {
     var product_id = url.parse(req.url, true).query.ID;
-    const product = await productTable.find({_id: product_id});
+    const product = await productTable.findOne({_id: product_id});
+    const store = await storeTable.findOne({_id: product.storeID});
     res.render("user/buyProduct",{
         authenticated: req.isAuthenticated(),
         user: req.user,
-        product: product
+        product: product,
+        store: store
+    });
+});
+router.post("/buyProduct", userCheck, async(req, res) => {
+    req.body.userID = req.user._id;  
+    await placeOrder(req.body);
+    return res.redirect("/orders")
+})
+router.get("/orders" , userCheck, async (req, res) => {
+    const orders = await orderTable.find({userID: req.user._id});
+    res.render("user/orders",{
+        authenticated: req.isAuthenticated(),
+        user: req.user,
+        orders: orders
     });
 });
 // router.get("/contact", (req, res) => {
