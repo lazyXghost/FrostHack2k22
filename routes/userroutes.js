@@ -63,6 +63,7 @@ router.get("/orders" , userCheck, async (req, res) => {
         orders: orders
     });
 });
+
 // router.get("/contact", (req, res) => {
 //     res.render("store/contact");
 // });
@@ -78,12 +79,12 @@ router.get("/orders" , userCheck, async (req, res) => {
 //     res.render("user/faq");
 // });
 
-// router.get("/profile",authCheck, (req, res) => {
-//     res.render("user/profile",{
-//         authenticated: req.isAuthenticated(),
-//         user: req.user,
-//         token:req.body.token
-//     });
-// });
+router.get("/profile", userCheck, (req, res) => {
+    res.render("user/profile",{
+        authenticated: req.isAuthenticated(),
+        user: req.user,
+        token:req.body.token
+    });
+});
 
 module.exports = router;

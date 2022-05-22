@@ -51,6 +51,11 @@ const OrderSchema = new mongoose.Schema({
             required:true
         }
     },
+    status: {
+        type: String,
+        required: true,
+        default: "pending"
+    }
     // every quantity has a name , quantity and price associated with it.
 });
 
