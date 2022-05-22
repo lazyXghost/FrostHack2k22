@@ -1,5 +1,3 @@
-const storeTable = require("../models/store")
-
 module.exports = {
   userCheck: function (req, res, next) {
     if(req.user && req.user.userType == 'user')

@@ -44,6 +44,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true,
         default:'pending',
+    },
+    image: {
+        data: Buffer,
+        contentType: String
     }
 });
 

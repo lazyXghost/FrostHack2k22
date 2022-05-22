@@ -4,8 +4,18 @@ const { storeLoggedIn, storeCheck } = require("../middleware/auth");
 const { storeLogIn, storeRegister, addProduct } = require("../utils");
 const productTable = require("../models/product");
 const storeTable = require("../models/store");
-
-
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({ 
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+  }) 
+});
 // ----- Registration and authentication for Stores -----
 router.get("/login", storeLoggedIn, (req, res) => {
   res.render("store/login");
@@ -58,7 +68,12 @@ router.get("/addProduct", storeCheck, (req, res) => {
     user: req.user,
   });
 });
-router.post("/addProduct", storeCheck, async (req, res) => {
+
+router.post("/addProduct", upload.single('image'), storeCheck, async (req, res) => {
+  req.body.image = {
+    data: fs.readFileSync('uploads/' + req.file.filename),
+    contentType: 'image/png'
+  }
   req.body.storeID = req.user._id;
   await addProduct(req.body, "pending");
   res.redirect("/store/products");

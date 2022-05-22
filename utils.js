@@ -6,6 +6,8 @@ const productTable = require("./models/product");
 const orderTable = require("./models/order");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const multer = require('multer');
+const removeUploadedFiles = require("multer/lib/remove-uploaded-files");
 
 
 module.exports = {
@@ -84,7 +86,7 @@ module.exports = {
     //   alert("created a new store successfully");
   },
 
-  addProduct: async function (formData, status) {
+  addProduct: async function (formData, status) {    
     const {
       name,
       costPrice,
@@ -92,7 +94,8 @@ module.exports = {
       salePrice,
       quantity,
       description,
-      storeID
+      storeID,
+      image
     } = formData;
     await productTable.create({
       name: name,
@@ -103,6 +106,7 @@ module.exports = {
       salePrice: salePrice,
       quantity: quantity,
       description: description,
+      image: image,
       status: status
     });
   },
